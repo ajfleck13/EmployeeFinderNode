@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 //Create express app route listeners for html/apis
-require('./routes/htmlRoutes.js')(app);
-require('./routes/apiRoutes.js')(app);
+require('./app/routing/apiRoutes.js')(app);
+require('./app/routing/htmlRoutes.js')(app);
 
 //Tell express app to start listening for these routes on this port
 app.listen(PORT, function() {
