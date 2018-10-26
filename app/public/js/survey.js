@@ -1,8 +1,14 @@
 let questions = [
-    "Do you like cheese?", 
-    "Pizza is good", 
-    "Annie are you okay, are you okay annie",
-    "Cause this is thriller, thriller night"
+    "An employee should respect rather than fear his boss", 
+    "Greed, for lack of a better word, is good", 
+    "It is better to train a known element, than to hire an unknown element",
+    "A programmer's skill or speed is more valuable than their institutional knowledge",
+    "It is better to do the wrong thing quickly and fix it, than to spend a long time doing it right once",
+    "Employees work harder when they have a constant deadline over their head",
+    "Preserving the maintainability of the code is better than writing faster code",
+    "A manager should give their employees complete autonomy except when there is a problem",
+    "Adding broken code is preferrable to adding no code",
+    "Refactoring should be done throughout the process, not only when it is apparently needed"
 ];
 
 let questioncontainer = $("#questioncontainer");
