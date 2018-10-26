@@ -24,5 +24,8 @@
   "homepage": "https://github.com/ajfleck13/EmployeeFinderNode#readme",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "engines": {
+    "node": "6.4.1"
   }
 }
