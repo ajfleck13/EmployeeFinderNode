@@ -18,17 +18,49 @@
         <h1>Survey</h1>
         <hr>
 
-        <h2>About you</h2>
+        <h2><strong>About you</strong></h2>
 
-        <h3>Name</h3>
-        <input type="text" class="form-control" id="nameinput" placeholder="Name">
+        <form onsubmit="event.preventDefault();">
+            <h3>Name</h3>
+            <input type="text" class="form-control" id="nameinput" placeholder="Name" required>
+    
+            <h3>Photo link</h3>
+            <input type="text" class="form-control" id="pictureinput" placeholder="Profile pic link" required>
+    
+            <hr>
+            <h2><strong>Survey Questions</strong></h2>
+            <div id="questioncontainer"></div>
+            
+            <div id="error" class="alert alert-danger">Please answer all questions before submitting!</div>
 
-        <h3>Photo link</h3>
-        <input type="text" class="form-control" id="pictureinput" placeholder="Profile pic link">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit" value="Submit">
+                Submit
+            </button>
+        </form>
 
         <hr>
-        <h2>Survey Questions</h2>
-        <div id="questioncontainer"></div>
+
+        <footer class="footer">
+            <div class="container">
+                <p><a href="/api/employees">API Employees List</a></p>
+            </div>
+        </footer>
+
+        <div id="results-modal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title"><strong>Best Match</strong></h2>
+                    <button class="close float-right" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body" id="modalMatch"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+        
+            </div>
+        </div>
     </div>
 
     <script src="./js/survey.js"></script>

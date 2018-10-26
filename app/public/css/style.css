@@ -1,11 +1,15 @@
+body {
+    margin-bottom: 20px;
+}
+
 .label-area-fill {
     position: absolute;
     left: 0px;
     top: 0px;
     bottom: 0px;
     right: 0px;
-    /* background-color: blue; */
     padding-left: 40px;
+    margin-top: 10px;
 }
 
 .radiocontainer {
@@ -19,9 +23,9 @@
 
 input[type="radio"] {
     transform: scale(1.5);
-    /* z-index: 2; */
+    margin-top: 20px;
 }
 
 input[type="radio"]:checked + .label-area-fill {
-    background-color: lightgreen;
+    box-shadow: 0 0 0 2px lightseagreen;
 }

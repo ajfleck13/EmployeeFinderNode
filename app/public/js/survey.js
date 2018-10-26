@@ -1,7 +1,7 @@
-let questions = [
-    "An employee should respect rather than fear his boss", 
+const questions = [
+    "A boss should be a friend first", 
     "Greed, for lack of a better word, is good", 
-    "It is better to train a known element, than to hire an unknown element",
+    "It is better to train a known worker, than to hire an unknown element",
     "A programmer's skill or speed is more valuable than their institutional knowledge",
     "It is better to do the wrong thing quickly and fix it, than to spend a long time doing it right once",
     "Employees work harder when they have a constant deadline over their head",
@@ -11,10 +11,17 @@ let questions = [
     "Refactoring should be done throughout the process, not only when it is apparently needed"
 ];
 
-let questioncontainer = $("#questioncontainer");
-let nameinput = $("#nameinput");
-let pictureinput = $("#pictureinput");
-let radiotext = ["1 (Strongly Agree)", "2 (Agree)", "3", "4 (Disagree)", "5 (Strongly Disagree)"];
+const questioncontainer = $("#questioncontainer");
+const nameinput = $("#nameinput");
+const pictureinput = $("#pictureinput");
+const error = $("#error");
+const modalMatch = $("#modalMatch");
+error.hide();
+const radiotext = ["1 <span class='d-none d-lg-inline'>(Strongly Agree)</span>", 
+"2 <span class='d-none d-lg-inline'>(Agree)</span>", 
+"3", 
+"4 <span class='d-none d-lg-inline'>(Disagree)</span>", 
+"5 <span class='d-none d-lg-inline'>(Strongly Disagree)</span>"];
 let employeeList = [];
 
 const questionName = function(index) {
@@ -27,7 +34,7 @@ for(let i = 0; i < questions.length; i++)
 
     let questionheader = $(`
     <div class="row">
-        <h1>${questions[i]}</h1>
+        <h4>${i+1}. ${questions[i]}</h4>
     </div>`)
     questioncontainer.append(questionheader)
 
@@ -35,39 +42,24 @@ for(let i = 0; i < questions.length; i++)
     for(let j = 0; j < 5; j++)
     {
         let radioname = name + `R${j+1}`;
-        let column = $(`<div class="col-sm">`);
+        let column = $(`<div class="col">`);
         column.append(`<input type="radio" name="${name}" id="${radioname}" value="${j+1}">`);
         column.append(`<label class="label-area-fill" for="${radioname}">${radiotext[j]}</label>`);
 
         questionradiorow.append(column);
-        // console.log(column);
     }
     questioncontainer.append(questionradiorow);
-    // console.log(questioncontainer);
-    // console.log("appended");
+    questioncontainer.append('<br>');
 }
 
 const submitValues = function() {
-    if(!nameinput.val())
-    {
-        submissionFailure();
-        return;
-    }
-
     let name = nameinput.val();
-
-    if(!pictureinput.val())
-    {
-        submissionFailure();
-        return;
-    }
-
     let picture = pictureinput.val();
 
     let answers = [];
 
     for(let i = 0; i < questions.length; i++) {
-        let answervalue = $(`input[name="${questionName(i)}"]:checked`).val();
+        let answervalue = parseInt($(`input[name="${questionName(i)}"]:checked`).val());
         if(!answervalue) 
         {
             submissionFailure();
@@ -79,11 +71,17 @@ const submitValues = function() {
 
     if(answers.length != 10)
     {
-        console.log('ERROR INCORRECT ANSWER LENGTH');
+        console.log('ERROR INCORRECT ANSWER ARRAY LENGTH');
     }
 
     prepareSendAndMatch(name, picture, answers);
 }
+
+const submissionFailure = function() {
+    error.show();
+}
+
+$("#submit").click(submitValues);
 
 const prepareSendAndMatch = function(name, picture, answers) {
     $.ajax({
@@ -113,15 +111,40 @@ const sendValuesAndMatch = function(name, picture, answers) {
 
 const findNearestMatch = function(answers) {
     let currentlowest = employeeList[0];
-    let currentlowestdifference = findDifference(answers, currentlowest);
+    let currentlowestdifference = calculateTotalDifference(answers, currentlowest);
 
     for(let i = 1; i < employeeList.length; i++)
     {
-        let newdifference = findDifference(answers, employeeList[i]);
+        let newdifference = calculateTotalDifference(answers, employeeList[i]);
         if(newdifference < currentlowestdifference)
         {
             currentlowest = employeeList[i];
             currentlowestdifference = newdifference;
         }
     }
+
+    displayBestMatch(currentlowest);
+}
+
+const calculateTotalDifference = function(answers, employeetocheck) {
+    let employeescores = employeetocheck.scores;
+
+    let totalDifference = 0;
+    for(let i = 0; i < answers.length; i++)
+    {
+        totalDifference += Math.abs(answers[i] - employeescores[i]);
+    }
+
+    return totalDifference;
+}
+
+const displayBestMatch = function(employee) {
+    modalMatch.empty();
+    
+    modalMatch.html(`
+    <h2>${employee.name}</h2>
+    <img src="${employee.photo}" alt="NO PICTURE AVAILABLE" width="100%">
+    `);
+
+    modalMatch.modal();
 }
