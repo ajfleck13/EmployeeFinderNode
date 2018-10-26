@@ -1,0 +1,27 @@
+.label-area-fill {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    /* background-color: blue; */
+    padding-left: 40px;
+}
+
+.radiocontainer {
+    padding: 10px;
+}
+
+.radio-row {
+    height: 50px;
+    border: lightgray 1px dotted;
+}
+
+input[type="radio"] {
+    transform: scale(1.5);
+    /* z-index: 2; */
+}
+
+input[type="radio"]:checked + .label-area-fill {
+    background-color: lightgreen;
+}
