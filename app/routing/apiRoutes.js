@@ -54,7 +54,7 @@ const ValidateEmployeeData = function(data) {
   //Ensure duplicate entries are not entered into our list
   for(let i = 0; i < employeeList; i++)
   {
-    if(data.name === employeeList.name && data.photo === employeeList.photo)
+    if(data.name == employeeList.name && data.photo == employeeList.photo)
     {
       return false
     }

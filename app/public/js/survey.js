@@ -53,8 +53,22 @@ for(let i = 0; i < questions.length; i++)
 }
 
 const submitValues = function() {
-    let name = nameinput.val();
+    if(!nameinput.val())
+    {
+        submissionFailure();
+        return;
+    }
+
+     let name = nameinput.val();
+
+    if(!pictureinput.val())
+    {
+        submissionFailure();
+        return;
+    }
+
     let picture = pictureinput.val();
+
 
     let answers = [];
 
@@ -74,6 +88,7 @@ const submitValues = function() {
         console.log('ERROR INCORRECT ANSWER ARRAY LENGTH');
     }
 
+    error.hide();
     prepareSendAndMatch(name, picture, answers);
 }
 
@@ -146,5 +161,5 @@ const displayBestMatch = function(employee) {
     <img src="${employee.photo}" alt="NO PICTURE AVAILABLE" width="100%">
     `);
 
-    modalMatch.modal();
+    $("#results-modal").modal('show');
 }
